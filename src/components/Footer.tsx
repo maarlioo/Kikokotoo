@@ -27,7 +27,7 @@ export function Footer({ t }: FooterProps) {
             rel="noopener noreferrer"
             className="hover:underline text-accent font-semibold"
           >
-            mariohilmar
+            Mario Hilmar
           </a>
         </p>
       </div>
