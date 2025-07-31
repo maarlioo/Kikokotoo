@@ -11,6 +11,15 @@ export function Footer({ t }: FooterProps) {
         <p className="font-semibold text-accent mb-2">{t.footer.disclaimerTitle}</p>
         <p className="text-sm mb-4">{t.footer.disclaimerText}</p>
         <p className="text-sm">{t.footer.contactInfo}</p>
+        <div className="flex justify-center gap-4 my-4">
+          <a href="https://www.psssf.or.tz/" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline text-accent font-semibold">
+            PSSSF
+          </a>
+          <a href="https://www.nssf.or.tz/" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline text-accent font-semibold">
+            NSSF
+          </a>
+        </div>
+        <p className="text-xs mt-6">Made with ❤️ by mariohilmar</p>
       </div>
     </footer>
   );
