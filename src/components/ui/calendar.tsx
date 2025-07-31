@@ -75,8 +75,8 @@ function Calendar({
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
         IconRight: () => <ChevronRight className="h-4 w-4" />,
         Dropdown: ({...dropdownProps}) => {
-          const fromYear = props.fromYear || new Date().getFullYear() - 100;
-          const toYear = props.toYear || new Date().getFullYear();
+          const fromYear = new Date().getFullYear() - 100;
+          const toYear = new Date().getFullYear() + 10;
           
           const years = Array.from({ length: toYear - fromYear + 1 }, (_, i) => fromYear + i).reverse();
           const months = Array.from({ length: 12 }, (_, i) => ({

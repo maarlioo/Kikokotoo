@@ -151,8 +151,6 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                     mode="single"
                     selected={hiredDate}
                     onSelect={setHiredDate}
-                    fromYear={currentYear - 100}
-                    toYear={currentYear}
                   />
                 </PopoverContent>
               </Popover>
@@ -177,8 +175,6 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                     mode="single"
                     selected={retirementDate}
                     onSelect={setRetirementDate}
-                    fromYear={currentYear - 100}
-                    toYear={currentYear}
                   />
                 </PopoverContent>
               </Popover>
