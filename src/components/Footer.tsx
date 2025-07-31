@@ -19,7 +19,17 @@ export function Footer({ t }: FooterProps) {
             NSSF
           </a>
         </div>
-        <p className="text-xs mt-6">Made with ❤️ by mariohilmar</p>
+        <p className="text-xs mt-6">
+          Made with ❤️ by{' '}
+          <a
+            href="https://twitter.com/maarlioo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline text-accent font-semibold"
+          >
+            mariohilmar
+          </a>
+        </p>
       </div>
     </footer>
   );
