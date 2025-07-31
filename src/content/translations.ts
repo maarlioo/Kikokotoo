@@ -1,6 +1,6 @@
 export const translations = {
   en: {
-    appName: "PesaCalc",
+    appName: "Kikokotoo",
     title: "Old Age / Retirement Pension Benefits Calculator",
     tagline: "Plan your future with confidence. Get an estimate of your pension benefits in minutes.",
     startCalculation: "Start Pension Calculation",
@@ -74,7 +74,7 @@ export const translations = {
     },
   },
   sw: {
-    appName: "PesaCalc",
+    appName: "Kikokotoo",
     title: "Kikokotoo cha Mafao ya Pensheni ya Uzeeni / Kustaafu",
     tagline: "Panga maisha yako ya usoni kwa uhakika. Pata makadirio ya mafao yako ya pensheni ndani ya dakika chache.",
     startCalculation: "Anza Kuhesabu Pensheni",

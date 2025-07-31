@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'PesaCalc: Pension Calculator',
+  title: 'Kikokotoo: Pension Calculator',
   description: 'A modern, bilingual calculator for old age and retirement pension benefits.',
 };
 
