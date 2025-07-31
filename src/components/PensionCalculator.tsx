@@ -24,6 +24,7 @@ type PensionCalculatorProps = {
 };
 
 const MIN_MONTHS = 180;
+const currentYear = new Date().getFullYear();
 
 export function PensionCalculator({ language, t }: PensionCalculatorProps) {
   const [hiredDate, setHiredDate] = useState<Date | undefined>();
@@ -145,7 +146,15 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={hiredDate} onSelect={setHiredDate} initialFocus />
+                  <Calendar 
+                    mode="single" 
+                    selected={hiredDate} 
+                    onSelect={setHiredDate} 
+                    initialFocus 
+                    captionLayout="dropdown-buttons"
+                    fromYear={currentYear - 70}
+                    toYear={currentYear}
+                  />
                 </PopoverContent>
               </Popover>
             </div>
@@ -166,7 +175,15 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={retirementDate} onSelect={setRetirementDate} initialFocus />
+                  <Calendar 
+                    mode="single" 
+                    selected={retirementDate} 
+                    onSelect={setRetirementDate} 
+                    initialFocus 
+                    captionLayout="dropdown-buttons"
+                    fromYear={currentYear - 10}
+                    toYear={currentYear + 10}
+                  />
                 </PopoverContent>
               </Popover>
             </div>
@@ -294,3 +311,5 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
     </div>
   );
 }
+
+    
