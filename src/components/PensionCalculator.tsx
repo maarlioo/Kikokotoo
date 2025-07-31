@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
-import { differenceInMonths, format, parseISO } from 'date-fns';
+import { differenceInMonths, parseISO } from 'date-fns';
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -143,9 +143,6 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                 onChange={handleDateChange(setHiredDate)}
                 className="w-full"
               />
-              <p className="text-sm text-muted-foreground">
-                {hiredDate ? format(hiredDate, "dd/MM/yyyy") : t.calculator.step1.pickDate}
-              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="retirement-date" className="font-semibold">{t.calculator.step1.retirementDate}</Label>
@@ -155,9 +152,6 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                 onChange={handleDateChange(setRetirementDate)}
                 className="w-full"
               />
-               <p className="text-sm text-muted-foreground">
-                {retirementDate ? format(retirementDate, "dd/MM/yyyy") : t.calculator.step1.pickDate}
-              </p>
             </div>
           </div>
           {monthsOfService > 0 && (
@@ -283,5 +277,3 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
     </div>
   );
 }
-
-    
