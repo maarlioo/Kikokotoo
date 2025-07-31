@@ -12,7 +12,7 @@ export function Footer({ t }: FooterProps) {
         <p className="text-sm mb-4">{t.footer.disclaimerText}</p>
         <p className="text-sm">{t.footer.contactInfo}</p>
         <div className="flex justify-center gap-4 my-4">
-          <a href="https://www.psssf.or.tz/" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline text-accent font-semibold">
+          <a href="https://www.psssf.go.tz/" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline text-accent font-semibold">
             PSSSF
           </a>
           <a href="https://www.nssf.or.tz/" target="_blank" rel="noopener noreferrer" className="text-sm hover:underline text-accent font-semibold">
