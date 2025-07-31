@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
-import { format, differenceInMonths } from 'date-fns';
-import { Calendar as CalendarIcon, AlertTriangle, CheckCircle2, ChevronsUpDown, Info } from 'lucide-react';
+import { differenceInMonths } from 'date-fns';
+import { AlertTriangle, CheckCircle2, ChevronsUpDown, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,11 +22,10 @@ type PensionCalculatorProps = {
 };
 
 const MIN_MONTHS = 180;
-const currentYear = new Date().getFullYear();
 
 export function PensionCalculator({ language, t }: PensionCalculatorProps) {
-  const [hiredDate, setHiredDate] = useState<Date | undefined>();
-  const [retirementDate, setRetirementDate] = useState<Date | undefined>();
+  const [hiredDateStr, setHiredDateStr] = useState('');
+  const [retirementDateStr, setRetirementDateStr] = useState('');
   const [salaryInputMode, setSalaryInputMode] = useState<'table' | 'multiline'>('table');
   const [salaries, setSalaries] = useState<(number | null)[]>(Array(36).fill(null));
   const [multilineSalaryText, setMultilineSalaryText] = useState('');
@@ -38,6 +35,16 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
   const [monthlyPension, setMonthlyPension] = useState<number | null>(null);
 
   const { toast } = useToast();
+  
+  const hiredDate = useMemo(() => {
+    const date = new Date(hiredDateStr);
+    return isNaN(date.getTime()) ? undefined : date;
+  }, [hiredDateStr]);
+
+  const retirementDate = useMemo(() => {
+    const date = new Date(retirementDateStr);
+    return isNaN(date.getTime()) ? undefined : date;
+  }, [retirementDateStr]);
 
   const monthsOfService = useMemo(() => {
     if (hiredDate && retirementDate && retirementDate > hiredDate) {
@@ -131,61 +138,23 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="hired-date" className="font-semibold">{t.calculator.step1.hiredDate}</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="hired-date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !hiredDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {hiredDate ? format(hiredDate, 'PPP') : <span>{t.calculator.step1.pickDate}</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar 
-                    mode="single" 
-                    selected={hiredDate} 
-                    onSelect={setHiredDate} 
-                    initialFocus 
-                    captionLayout="dropdown-buttons"
-                    fromYear={currentYear - 70}
-                    toYear={currentYear}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Input
+                id="hired-date"
+                type="text"
+                placeholder="YYYY-MM-DD"
+                value={hiredDateStr}
+                onChange={(e) => setHiredDateStr(e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="retirement-date" className="font-semibold">{t.calculator.step1.retirementDate}</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="retirement-date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !retirementDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {retirementDate ? format(retirementDate, 'PPP') : <span>{t.calculator.step1.pickDate}</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar 
-                    mode="single" 
-                    selected={retirementDate} 
-                    onSelect={setRetirementDate} 
-                    initialFocus 
-                    captionLayout="dropdown-buttons"
-                    fromYear={currentYear - 10}
-                    toYear={currentYear + 10}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Input
+                id="retirement-date"
+                type="text"
+                placeholder="YYYY-MM-DD"
+                value={retirementDateStr}
+                onChange={(e) => setRetirementDateStr(e.target.value)}
+              />
             </div>
           </div>
           {monthsOfService > 0 && (
@@ -311,5 +280,3 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
     </div>
   );
 }
-
-    
