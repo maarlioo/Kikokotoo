@@ -109,19 +109,6 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
     if (value === null) return '---';
     return `TZS ${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
-  
-  const currentYear = new Date().getFullYear();
-
-  const handleDateChange = (setter: (date: Date | undefined) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value) {
-      // The `new Date()` constructor with a string like '2024-01-01' will parse it as UTC.
-      // To avoid timezone issues where the date might shift, we append T00:00:00
-      // to ensure it's treated as local time at the start of the day.
-      setter(new Date(e.target.value + 'T00:00:00'));
-    } else {
-      setter(undefined);
-    }
-  };
 
   return (
     <div className="container mx-auto max-w-4xl space-y-8 px-4">
@@ -144,23 +131,53 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="hired-date" className="font-semibold">{t.calculator.step1.hiredDate}</Label>
-              <Input
-                id="hired-date"
-                type="date"
-                value={hiredDate ? format(hiredDate, 'yyyy-MM-dd') : ''}
-                onChange={handleDateChange(setHiredDate)}
-                className="w-full"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !hiredDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {hiredDate ? format(hiredDate, "dd/MM/yyyy") : <span>{t.calculator.step1.pickDate}</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={hiredDate}
+                    onSelect={setHiredDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="space-y-2">
               <Label htmlFor="retirement-date" className="font-semibold">{t.calculator.step1.retirementDate}</Label>
-              <Input
-                id="retirement-date"
-                type="date"
-                value={retirementDate ? format(retirementDate, 'yyyy-MM-dd') : ''}
-                onChange={handleDateChange(setRetirementDate)}
-                className="w-full"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !retirementDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {retirementDate ? format(retirementDate, "dd/MM/yyyy") : <span>{t.calculator.step1.pickDate}</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={retirementDate}
+                    onSelect={setRetirementDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           {monthsOfService > 0 && (
