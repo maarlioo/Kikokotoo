@@ -110,6 +110,8 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
     return `TZS ${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
   
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="container mx-auto max-w-4xl space-y-8 px-4">
       <Card className="shadow-lg border-primary/20">
@@ -149,7 +151,8 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                     mode="single"
                     selected={hiredDate}
                     onSelect={setHiredDate}
-                    initialFocus
+                    fromYear={currentYear - 100}
+                    toYear={currentYear}
                   />
                 </PopoverContent>
               </Popover>
@@ -174,7 +177,8 @@ export function PensionCalculator({ language, t }: PensionCalculatorProps) {
                     mode="single"
                     selected={retirementDate}
                     onSelect={setRetirementDate}
-                    initialFocus
+                    fromYear={currentYear - 100}
+                    toYear={currentYear}
                   />
                 </PopoverContent>
               </Popover>

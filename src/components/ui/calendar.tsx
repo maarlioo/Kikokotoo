@@ -6,6 +6,13 @@ import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -15,6 +22,16 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const [month, setMonth] = React.useState(props.month ?? new Date());
+
+  const handleYearChange = (year: string) => {
+    setMonth(new Date(parseInt(year), month.getMonth()));
+  };
+  
+  const handleMonthChange = (monthIndex: string) => {
+    setMonth(new Date(month.getFullYear(), parseInt(monthIndex)));
+  };
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -23,8 +40,8 @@ function Calendar({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium",
-        caption_dropdowns: "flex justify-center gap-1",
+        caption_label: "text-sm font-medium hidden",
+        caption_dropdowns: "flex justify-center gap-2",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
@@ -55,13 +72,57 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("h-4 w-4", className)} {...props} />
-        ),
+        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+        IconRight: () => <ChevronRight className="h-4 w-4" />,
+        Dropdown: ({...dropdownProps}) => {
+          const fromYear = props.fromYear || new Date().getFullYear() - 100;
+          const toYear = props.toYear || new Date().getFullYear();
+          
+          const years = Array.from({ length: toYear - fromYear + 1 }, (_, i) => fromYear + i).reverse();
+          const months = Array.from({ length: 12 }, (_, i) => ({
+            value: i,
+            label: new Date(2000, i).toLocaleString('default', { month: 'long' })
+          }));
+
+          return (
+            <div className="flex gap-2">
+              <Select
+                value={month.getFullYear().toString()}
+                onValueChange={handleYearChange}
+              >
+                <SelectTrigger className="w-[100px]">
+                  <SelectValue placeholder="Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={month.getMonth().toString()}
+                onValueChange={handleMonthChange}
+              >
+                <SelectTrigger className="w-[120px]">
+                  <SelectValue placeholder="Month" />
+                </SelectTrigger>
+                <SelectContent>
+                  {months.map((m) => (
+                    <SelectItem key={m.value} value={m.value.toString()}>
+                      {m.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )
+        }
       }}
+      captionLayout="dropdown"
+      month={month}
+      onMonthChange={setMonth}
       {...props}
     />
   )
@@ -69,5 +130,3 @@ function Calendar({
 Calendar.displayName = "Calendar"
 
 export { Calendar }
-
-    
