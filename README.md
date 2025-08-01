@@ -31,21 +31,6 @@ A modern, bilingual (English & Swahili), mobile-responsive pension benefits calc
 - JavaScript (Vanilla or React-compatible logic)
 - JSON-based i18n for language switching
 
----
-
-## 📷 Screenshots
-
-> _Add screenshots or UI previews here_
-
----
-
-## 🚀 Getting Started
-
-### 🔍 Prerequisites
-
-- Git
-- Code Editor (e.g. VS Code)
-- Live Server (optional)
 
 ### 📦 Clone the Repository
 
